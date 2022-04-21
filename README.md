@@ -15,8 +15,8 @@ Please update line 69 of `getjira` for your environment, or delete it altogether
 ## Installation:
 ```
 cd /opt
-git clone repo
-cd repo
+git clone git@github.com:GitStoph/jirasearchscripts.git
+cd jirasearchscripts
 python3 -m pip install -r requirements.txt --user
 nano .env # And update it with your necessary credentials. SEE DISCLAIMER.
 cp jirasearch.py /usr/local/bin/jirasearch
@@ -24,3 +24,32 @@ cp getjira.py /usr/local/bin/getjira
 ```
 Make sure you got the right permissions on those two files for your user. 
 If you want/need to update the python libs, you can `python3 -m pip install --upgrade -r requirements.txt`.
+
+
+## getjira.py
+Usage: `getjira PROJECT-3712`
+Yeah. This one is pretty simple. Use the key/ticket slug pertinent for your environment.
+
+
+## jirasearch.py
+```
+usage: jirasearch.py [-h] [-p PROJECT] -s SEARCHSTRING [-dl DESCLENG] [-sl SUMLENG]
+
+Arguments for searching JIRA. This could be scoped to a Project with -p. It will search in the Summary, comments,
+worklog comments, descriptions, deploy guides, revert plans, and/or labels.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p PROJECT, --project PROJECT
+                        Which JIRA projects should the results be scoped to? Comma separate.
+  -s SEARCHSTRING, --searchstring SEARCHSTRING
+                        What string are we searching for?
+  -dl DESCLENG, --descleng DESCLENG
+                        How many characters should we limit the description field to?
+  -sl SUMLENG, --sumleng SUMLENG
+                        How many characters should we limit the summary field to?
+```
+Example: `jirasearch -p SYSADMIN,NETADMIN,SECURITY -s '10.0.0.1' -dl 100 -sl 400`
+- `-p` would be projects that exist in your JIRA instance.
+- `-s` could be any string that'd show up in a JIRA ticket.
+- `-dl` and `-sl` arent necessary. Tweak them to change how your output looks in your terminal.
